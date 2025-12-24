@@ -19,6 +19,8 @@ public class LobbySceneHandler : MonoBehaviour
 
     private GameObject Popup_Setting;
 
+    private GameObject Popup_Shop;
+
     private GameObject m_Player;
     void Awake()
     {
@@ -41,6 +43,8 @@ public class LobbySceneHandler : MonoBehaviour
 
         Popup_Setting = transform.Find("Middle/Settings").gameObject;
 
+        Popup_Shop = transform.Find("Middle/Shop").gameObject;
+
     }
     private void OnDestroy()
     {
@@ -60,6 +64,11 @@ public class LobbySceneHandler : MonoBehaviour
     public void Show_Popup_Setting()
     {
         Popup_Setting.gameObject.SetActive(true);
+    }
+
+    public void Show_Popup_Shop()
+    {
+        Popup_Shop.gameObject.SetActive(true);
     }
     public void FadeInLobbyScene(Action<string> callback)
     {
