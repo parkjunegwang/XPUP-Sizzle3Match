@@ -52,9 +52,9 @@ public class LobbySceneHandler : MonoBehaviour
         m_fsmLobby = null;
     }
 
-    public void Show_Daily_Bonus_30Day()
+    public async void Show_Daily_Bonus_30Day()
     {
-        Popup_DailyBonus.gameObject.SetActive(true);
+       await PopupManager.Instance.OpenAsync<PopupDailyBonus>("Popup/DailyBonus/Daily_Bonus");
     }
     public void Show_Popup_Mssion()
     {

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,22 +16,22 @@ public class DailyBonusItem : MonoBehaviour
     //ÇÊ¼ö 
     Image image_Icon;
     Image image_BG;
-    TextMeshPro text_Count;
-    TextMeshPro text_Day;
+    TextMeshProUGUI text_Count;
+    TextMeshProUGUI text_Day;
 
-    public void Start()
+    public void Initailize()
     {
-        Foucus = GameObject.Find("Focus");
-        FoucusTop = GameObject.Find("Bg/FocusTop").GetComponent<Image>();
+        Foucus = transform.Find("Focus").gameObject;
+        FoucusTop = transform.Find("Bg/FocusTop").GetComponent<Image>();
 
-        DividerLine = GameObject.Find("Bg/DividerLine");
-        Check = GameObject.Find("Icon_Check");
+        DividerLine = transform.Find("Bg/DividerLine").gameObject;
+        Check = transform.Find("Icon_Check").gameObject;
 
-        image_BG = GameObject.Find("Bg").GetComponent<Image>();
+        image_BG = transform.Find("Bg").GetComponent<Image>();
 
-        image_Icon = GameObject.Find("ItemIcon").GetComponent<Image>();
-        text_Count = GameObject.Find("Text_Num").GetComponent<TextMeshPro>();
-        text_Day = GameObject.Find("Text_Day").GetComponent<TextMeshPro>();
+        image_Icon = transform.Find("ItemIcon").GetComponent<Image>();
+        text_Count = transform.Find("Text_Num").GetComponent<TextMeshProUGUI>();
+        text_Day = transform.Find("Text_Day").GetComponent<TextMeshProUGUI>();
     }
 
     public void SetToday()
@@ -38,7 +39,7 @@ public class DailyBonusItem : MonoBehaviour
         text_Day.color = Color.green;
         image_BG.color = Color.green;
         FoucusTop.color = Color.white;
-
+        text_Day.text = "TODAY";
         Foucus.SetActive(true);
         FoucusTop.gameObject.SetActive(true);
 
@@ -52,14 +53,15 @@ public class DailyBonusItem : MonoBehaviour
         Foucus.SetActive(false);
         FoucusTop.gameObject.SetActive(false);
 
+        image_BG.color = GetHexColor("0787FF");
+        FoucusTop.color = GetHexColor("0787FF");
+
         DividerLine.SetActive(true);
         Check.SetActive(true);
     }
     public void SetNext()
     {
-        text_Day.color = Color.white;
-        image_BG.color = GetHexColor("0787FF");
-        FoucusTop.color = GetHexColor("0787FF");
+        text_Day.color = Color.black;
         Foucus.SetActive(false);
         FoucusTop.gameObject.SetActive(false);
 
@@ -73,5 +75,13 @@ public class DailyBonusItem : MonoBehaviour
         ColorUtility.TryParseHtmlString(hex, out color);
 
         return color;
+    }
+
+    public void GetItemAni()
+    {
+        Check.SetActive(true);
+        DOTween.Sequence().Append(Check.transform.DOScale(3, 0f))
+                         .Append(Check.transform.DOScale(1, 0.5f))
+                        .OnComplete(() => SetGet());
     }
 }   

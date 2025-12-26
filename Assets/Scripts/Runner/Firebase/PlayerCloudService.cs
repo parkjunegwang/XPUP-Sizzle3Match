@@ -53,7 +53,8 @@ public class PlayerCloudService
         {
             lastMissionAtUtc = Timestamp.FromDateTime(DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc)),
             currency = 0,
-            version = 1
+            version = 1,
+            count = 0,
         };
 
         await UserDoc.SetAsync(init, SetOptions.MergeAll);
@@ -95,11 +96,12 @@ public class PlayerCloudService
             }
 
             int newCurrency = data.currency + reward;
-
+            int newCount = data.count + 1;
             tx.Update(UserDoc, new Dictionary<string, object>
         {
             { "currency", newCurrency },
-            { "lastMissionAtUtc", FieldValue.ServerTimestamp }
+            { "lastMissionAtUtc", FieldValue.ServerTimestamp },
+            { "count", newCount}
         });
 
             return ClaimDailyResult.Success(newCurrency);
