@@ -37,7 +37,7 @@ public class LobbySceneHandler : MonoBehaviour
     {
         m_fsmLobby.StartFSM();
 
-        Popup_DailyBonus = transform.Find("Middle/Daily_Bonus_30Day").gameObject;
+        Popup_DailyBonus = transform.Find("Middle/Daily_Bonus").gameObject;
 
         Popup_Mission = transform.Find("Middle/Mission_List").gameObject;
 

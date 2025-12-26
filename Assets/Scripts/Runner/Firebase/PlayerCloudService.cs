@@ -1,8 +1,9 @@
-using System;
-using System.Threading.Tasks;
 using Firebase.Auth;
 using Firebase.Extensions;
 using Firebase.Firestore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerCloudService
@@ -30,16 +31,27 @@ public class PlayerCloudService
     /// <summary>유저 문서가 없으면 생성하고, 있으면 읽어서 반환</summary>
     public async Task<PlayerCloudData> GetOrCreateAsync()
     {
-        var snap = await UserDoc.GetSnapshotAsync();
-        if (snap.Exists)
+      
+
+        try
         {
-            return snap.ConvertTo<PlayerCloudData>();
+            var snap = await UserDoc.GetSnapshotAsync();
+            //  dictionary = snapshot.ToDictionary();
+
+            if (snap.Exists)
+            {
+                return snap.ConvertTo<PlayerCloudData>();
+            }
+        }
+        catch (FirestoreException)
+        {
+
         }
 
         // 최초 생성: lastMissionAtUtc는 아주 과거(또는 null)로 넣어서 첫 데일리 바로 가능하게 처리
         var init = new PlayerCloudData
         {
-            lastMissionAtUtc = Timestamp.FromDateTime(DateTime.SpecifyKind(new DateTime(2000, 1, 1), DateTimeKind.Utc)),
+            lastMissionAtUtc = Timestamp.FromDateTime(DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc)),
             currency = 0,
             version = 1
         };
@@ -64,7 +76,7 @@ public class PlayerCloudService
             {
                 data = new PlayerCloudData
                 {
-                    lastMissionAtUtc = Timestamp.FromDateTime(DateTime.SpecifyKind(new DateTime(2000, 1, 1), DateTimeKind.Utc)),
+                    lastMissionAtUtc = Timestamp.FromDateTime(DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc)),
                     currency = 0,
                     version = 1
                 };
