@@ -11,7 +11,6 @@ public class PopupDailyBonus : MonoBehaviour
 
         Button_Close = transform.Find("Button_Close02").GetComponent<Button>();
 
-
         Dimed.onClick.AddListener(ClosePopup);
 
         Button_Close.onClick.AddListener(ClosePopup);
