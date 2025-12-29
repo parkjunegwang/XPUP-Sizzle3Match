@@ -2098,8 +2098,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a258d3e6cdf455a44a51b3ef3d04a18f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EditSceneHandler
-  X: 2
-  Y: 2
+  X: 3
+  Y: 1
   StageLevel: 1
   StageClearTime: 600
   CompleteEXP: 100
@@ -2280,6 +2280,7 @@ GameObject:
   - component: {fileID: 1778602775}
   - component: {fileID: 1778602774}
   - component: {fileID: 1778602773}
+  - component: {fileID: 1778602777}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2371,6 +2372,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1778602777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778602772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f7877c3dd5ba664fb6a0dd227e5e0aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InGameUIHandler
 --- !u!1 &1792002789
 GameObject:
   m_ObjectHideFlags: 0
