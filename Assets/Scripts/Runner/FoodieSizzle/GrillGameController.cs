@@ -141,7 +141,7 @@ public class GrillGameController : MonoBehaviour
                 {
                     if (_prevGrill.IsEmpty())
                     {
-                        _prevGrill.NextItemSet();
+                       // _prevGrill.NextItemSet();
                     }
                 }
                 _picked = null;

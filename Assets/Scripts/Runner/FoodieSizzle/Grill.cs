@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using static UnityEditor.Progress;
@@ -117,12 +118,22 @@ public class Grill : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
 
-        NextItemSet();
+        yield return NextItemSet();
         // 여기서 점수/주문 달성 이벤트를 쏴도 됨
         // OnExploded?.Invoke(this, type);
     }
-    public void NextItemSet()
+    IEnumerator NextItemSet()
     {
+        for (int i = 0; i < NextItems.Length; ++i)
+        {
+            NextItems[i].transform.DORotate(Vector3.zero, 0.2f);
+            NextItems[i].transform.DOScale(new Vector3(0.9f, 0.9f, 0.9f), 0.2f);
+            NextItems[i].transform.DOMove(slots[i].transform.position, 0.2f);
+        }
+
+        yield return new WaitForSeconds(0.2f);
+
+
         for (int i = 0; i < slots.Length; i++)
         {
             IngredientItem a = null;
@@ -137,7 +148,9 @@ public class Grill : MonoBehaviour
 
                 slots[i].Current = a;
             }
-
+            NextItems[i].transform.eulerAngles = new Vector3(0,0,-40f);
+            NextItems[i].transform.localPosition = Vector3.zero;
+            NextItems[i].transform.localScale = new Vector3(0.6f,0.6f,0.6f);
             NextItems[i].Shake(true);
 
         }

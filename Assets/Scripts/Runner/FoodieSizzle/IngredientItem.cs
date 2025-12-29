@@ -1,6 +1,7 @@
 
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class IngredientItem : MonoBehaviour
 {
@@ -48,29 +49,9 @@ public class IngredientItem : MonoBehaviour
         type = _type;
         var a = GetComponent<SpriteRenderer>();
 
-        switch (_type)
-        {
-            case IngredientType.Meat:
+        string path = "Image/Ingame/Item/" + type.ToString();
 
-                a.color = Color.white;
-                break;
-            case IngredientType.Onion:
-                a.color = Color.orange;
-                break;
-            case IngredientType.Pepper:
-                a.color = Color.red;
-                break;
-            case IngredientType.Mushroom:
-                a.color = Color.gray;
-                break;
-            case IngredientType.Tomato:
-                a.color = Color.blue;
-                break;
-            case IngredientType.Sauce:
-                a.color = Color.green;
-                break;
-     
-        }
+        a.sprite = Resources.Load<Sprite>(path);
     }
     public void Shake(bool isNone)
     {
@@ -87,30 +68,8 @@ public class IngredientItem : MonoBehaviour
 
         var a = GetComponent<SpriteRenderer>();
 
-        switch (type)
-        {
-            case IngredientType.Meat:
+        string path = "Image/Ingame/Item/" + type.ToString();
 
-                a.color = Color.white;
-                break;
-            case IngredientType.Onion:
-                a.color = Color.orange;
-                break;
-            case IngredientType.Pepper:
-                a.color = Color.red;
-                break;
-            case IngredientType.Mushroom:
-                a.color = Color.gray;
-                break;
-            case IngredientType.Tomato:
-                a.color = Color.blue;
-                break;
-            case IngredientType.Sauce:
-                a.color = Color.green;
-                break;
-            case IngredientType.None:
-                a.color = new Color(0,0,0,0);
-                break;
-        }
+        a.sprite = Resources.Load<Sprite>(path);
     }
 }
