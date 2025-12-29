@@ -119,6 +119,9 @@ public class Grill : MonoBehaviour
 
 
         yield return NextItemSet();
+
+
+        InGameUIHandler.I.AddExp();
         // 여기서 점수/주문 달성 이벤트를 쏴도 됨
         // OnExploded?.Invoke(this, type);
     }
@@ -137,7 +140,14 @@ public class Grill : MonoBehaviour
             return Vector3.zero;
         }
     }
+    public void EmptyItem()
+    {
+        //다음레벨이 있다면! 꼭체크해야함
 
+        //없다면
+
+        StartCoroutine(NextItemSet());
+    }
     IEnumerator NextItemSet()
     {
         for (int i = 0; i < NextItems.Length; ++i)
