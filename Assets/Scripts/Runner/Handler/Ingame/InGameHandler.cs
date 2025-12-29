@@ -12,6 +12,8 @@ public class InGameHandler : MonoBehaviour
     public static InGameHandler I; //빠른개발과 편의를 위해 인스턴스하자 시간이없다 크크
     private SpriteRenderer sr;
 
+    public SpriteRenderer GridManager;
+
     private BgFitMode mode = BgFitMode.Stretch;
     void Awake()
     {
@@ -61,6 +63,7 @@ public class InGameHandler : MonoBehaviour
             case BgFitMode.Stretch:
                 // 왜곡 허용 + 완전 꽉 채움
                 transform.localScale = new Vector3(sx, sy, 1f);
+                GridManager.transform.localScale = new Vector3(sx, sx, 1f);
                 break;
         }
     }
