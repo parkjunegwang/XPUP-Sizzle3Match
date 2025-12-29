@@ -1,27 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.FrameWork.Job;
+using System.Collections.Generic;
 using UnityEngine;
 
-public enum eBubbleColorType
+
+public class GameData : IJMData
 {
-    Red,
-    Green,
-    Blue,
-    Yellow,
-    Wall,
-    PreVIew,
-    // 필요하면 추가
+    public float BGM { get; set; } = PlayerPrefs.GetFloat("BGM", 0.2f);
+
+    public float SFX { get; set; } = PlayerPrefs.GetFloat("SFX", 0.2f);
 }
-
-
-public enum BubbleKind
-{
-    Normal,
-    Fairy // 요정 구슬
-}
-
-[System.Serializable]
-public class BubblePath
-{
-    public List<Vector3Int> cells;
-}
-

@@ -61,9 +61,9 @@ public class LobbySceneHandler : MonoBehaviour
         Popup_Mission.gameObject.SetActive(true);
     }
 
-    public void Show_Popup_Setting()
+    public async void Show_Popup_Setting()
     {
-        Popup_Setting.gameObject.SetActive(true);
+        await PopupManager.Instance.OpenAsync<PopupSetting>("Popup/Setting/Settings");
     }
 
     public void Show_Popup_Shop()
