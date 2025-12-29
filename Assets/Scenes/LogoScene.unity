@@ -394,6 +394,7 @@ GameObject:
   - component: {fileID: 586227566}
   - component: {fileID: 586227568}
   - component: {fileID: 586227567}
+  - component: {fileID: 586227569}
   m_Layer: 0
   m_Name: Image_PlayHard
   m_TagString: Untagged
@@ -458,6 +459,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 586227565}
   m_CullTransparentMesh: 1
+--- !u!95 &586227569
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586227565}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b3d30f77cdee0f4438559b934c36661c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &594893935
 GameObject:
   m_ObjectHideFlags: 0
