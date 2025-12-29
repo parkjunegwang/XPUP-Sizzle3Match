@@ -51,16 +51,18 @@ public class GrillGameController : MonoBehaviour
 
         // 재료 먼저 선택
         var hit = Physics2D.Raycast(world, Vector2.zero, 0f, ingredientMask);
-        var GrillHit = Physics2D.Raycast(world, Vector2.zero, 0f, grillSlotMask);
-        
-        var _PrevGrill = Physics2D.Raycast(world, Vector2.zero, 0f, grillMask);
+      
 
         if (!hit.collider) { _picked = null; _pickedCol = null; return; }
 
         var item = hit.collider.GetComponent<IngredientItem>();
         if (item == null || item.IsLocked) { _picked = null; _pickedCol = null; return; }
 
-        if(GrillHit.collider != null)
+        var GrillHit = Physics2D.Raycast(world, Vector2.zero, 0f, grillSlotMask);
+
+        var _PrevGrill = Physics2D.Raycast(world, Vector2.zero, 0f, grillMask);
+
+        if (GrillHit.collider != null)
             _prevGrillSlot = GrillHit.collider.GetComponent<GrillSlot>();
 
         _prevGrill = _PrevGrill.collider.GetComponent<Grill>();
@@ -74,6 +76,7 @@ public class GrillGameController : MonoBehaviour
 
         var m = ScreenToWorld(screen);
         m.z = _picked.transform.position.z;
+        
         _grabOffsetWorld = _picked.transform.position - m;
     }
 

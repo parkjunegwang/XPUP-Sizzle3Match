@@ -22,7 +22,7 @@ public class Grill : MonoBehaviour
     {
         for (int i = 0; i < NextItems.Length; i++)
         {
-            NextItems[i].Shake(true);
+            NextItems[i].ShakeNextItem();
         }
     }
 
@@ -122,13 +122,32 @@ public class Grill : MonoBehaviour
         // 여기서 점수/주문 달성 이벤트를 쏴도 됨
         // OnExploded?.Invoke(this, type);
     }
+    public Vector3 MinusMoveItem(IngredientType type)
+    {
+        if (type == IngredientType.Bread_03
+            || type == IngredientType.Cake_01
+            || type == IngredientType.Cake_02
+            || type == IngredientType.Cake_03
+            || type == IngredientType.Cake_04)
+        {
+            return new Vector3(0f, +0.02f, 0f);
+        }
+        else
+        {
+            return Vector3.zero;
+        }
+    }
+
     IEnumerator NextItemSet()
     {
         for (int i = 0; i < NextItems.Length; ++i)
         {
             NextItems[i].transform.DORotate(Vector3.zero, 0.2f);
-            NextItems[i].transform.DOScale(new Vector3(0.9f, 0.9f, 0.9f), 0.2f);
-            NextItems[i].transform.DOMove(slots[i].transform.position, 0.2f);
+            NextItems[i].transform.DOScale(new Vector3(1.8f, 1.8f,1.8f), 0.2f);
+
+            Vector3 movePos = slots[i].transform.position - MinusMoveItem(NextItems[i].type);
+
+            NextItems[i].transform.DOMove(movePos, 0.2f);
         }
 
         yield return new WaitForSeconds(0.2f);
@@ -150,8 +169,8 @@ public class Grill : MonoBehaviour
             }
             NextItems[i].transform.eulerAngles = new Vector3(0,0,-40f);
             NextItems[i].transform.localPosition = Vector3.zero;
-            NextItems[i].transform.localScale = new Vector3(0.6f,0.6f,0.6f);
-            NextItems[i].Shake(true);
+            NextItems[i].transform.localScale = new Vector3(1f,1f,1f);
+            NextItems[i].ShakeNextItem();
 
         }
     }

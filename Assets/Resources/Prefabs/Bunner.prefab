@@ -242,9 +242,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185219237559404664}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.3420201, w: 0.9396927}
+  m_LocalRotation: {x: 0, y: 0, z: -0.3420201, w: 0.9396927}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6000001, y: 0.6000001, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7430676883663811068}
@@ -298,7 +298,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 82f4d164a917b0241a666f18902dd993, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cc5b0f6bfb8994e40a0aeba4b7a38800, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -321,6 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientItem
   type: 0
+  sr: {fileID: 0}
 --- !u!1 &2644063703696710933
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,7 +382,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.3420201, w: 0.9396927}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6000001, y: 0.6000001, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2600850984949602711}
@@ -435,7 +436,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: c9e91dab64ebb4443942902d424aa7d7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aae983decf39d1c4b903c4ec3924023f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -458,6 +459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientItem
   type: 0
+  sr: {fileID: 0}
 --- !u!1 &4484227347379119897
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,9 +844,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7603873254574180750}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.3420201, w: 0.9396927}
+  m_LocalRotation: {x: 0, y: 0, z: -0.3420201, w: 0.9396927}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6000001, y: 0.6000001, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4332142734387110737}
@@ -898,7 +900,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: c9e91dab64ebb4443942902d424aa7d7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ab1abf8d176f33349b66414678669130, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -921,6 +923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientItem
   type: 0
+  sr: {fileID: 0}
 --- !u!1 &8226055865213013846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,7 +1027,7 @@ PrefabInstance:
     - target: {fileID: 155622719854924468, guid: 96d7d0e8a59428b488543869dfd9439c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 59096532427d7b044ba2328fa3d0f6b8, type: 3}
+      objectReference: {fileID: 21300000, guid: 813f35ed6402ad94cadb786da922cc31, type: 3}
     - target: {fileID: 316090228553120045, guid: 96d7d0e8a59428b488543869dfd9439c, type: 3}
       propertyPath: m_Size.x
       value: 0.9

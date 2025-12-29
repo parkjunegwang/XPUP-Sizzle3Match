@@ -7,6 +7,7 @@ public class IngredientItem : MonoBehaviour
 {
     public IngredientType type;
 
+    public SpriteRenderer sr;
     // 드래그/선택용 상태
     public bool IsLocked { get; private set; }
 
@@ -14,6 +15,10 @@ public class IngredientItem : MonoBehaviour
 
     public void Lock(bool v) => IsLocked = v;
 
+    private void Awake()
+    {
+        sr = GetComponent<SpriteRenderer>();
+    }
     // 간단 애니: 스케일 팝
     public IEnumerator CoPop(float time)
     {
@@ -47,11 +52,10 @@ public class IngredientItem : MonoBehaviour
             Debug.LogError("들어올수없는 녀석");
         }
         type = _type;
-        var a = GetComponent<SpriteRenderer>();
-
+  
         string path = "Image/Ingame/Item/" + type.ToString();
 
-        a.sprite = Resources.Load<Sprite>(path);
+        sr.sprite = Resources.Load<Sprite>(path);
     }
     public void Shake(bool isNone)
     {
@@ -64,12 +68,19 @@ public class IngredientItem : MonoBehaviour
             type = (IngredientType)Random.Range(0, 6);
         }
 
-       
-
-        var a = GetComponent<SpriteRenderer>();
-
         string path = "Image/Ingame/Item/" + type.ToString();
 
-        a.sprite = Resources.Load<Sprite>(path);
+        sr = GetComponent<SpriteRenderer>();
+
+        sr.sprite = Resources.Load<Sprite>(path);
+    }
+
+    public void ShakeNextItem()
+    {
+        type = (IngredientType)Random.Range(0, 8);
+
+        string path = "Image/Ingame/Item_Preview/" + type.ToString() + "_pre";
+
+        sr.sprite = Resources.Load<Sprite>(path);
     }
 }
