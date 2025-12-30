@@ -45,6 +45,27 @@ public class InGameHandler : MonoBehaviour
 
             ObjBunner.InitializeSlot();
         }
+
+        //ÃÑ ±×¸© °¹¼ö¸¦ ±¸ÇÑ´Ù..
+         var remainTrayCount = Data.GetRemainTrayCount();
+         var sprayCount = remainTrayCount / Bunners.transform.childCount;
+         var sprayRemainCount = remainTrayCount % Bunners.transform.childCount;
+
+        for (int i = 0; i < Bunners.transform.childCount; ++i)
+        {
+            Grill ObjBunner = Bunners.transform.GetChild(i).GetComponent<Grill>();
+
+            if (sprayRemainCount < 0)
+            {
+                sprayRemainCount = 0;
+            }
+            ObjBunner.SetRemaintrayCount(sprayCount + sprayRemainCount);
+
+            sprayRemainCount -= 1;
+            //ÃæÀü ³ª¸ÓÁö ±×¸© °¹¼ö
+            //ObjBunner.InitializeSlot();
+        }
+        //
     }
     public void UnLockGrill(IngredientType type)
     {

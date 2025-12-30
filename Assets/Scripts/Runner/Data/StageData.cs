@@ -56,7 +56,19 @@ public class StageData : IJMData
     public IngredientType GetNextItemData()
     {
         itemcount+= 1;
+        if (itemcount >= StageItemList.Count)
+        {
+            return IngredientType.None;
+        }
+
         return StageItemList[itemcount];
+    }
+
+    public int GetRemainTrayCount()
+    {
+        int count = StageItemList.Count - itemcount;
+
+        return count % 2 == 0 ? count / 2 : (count / 2) + 1;
     }
 }
 

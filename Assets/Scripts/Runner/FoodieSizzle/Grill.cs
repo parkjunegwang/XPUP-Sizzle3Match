@@ -18,6 +18,8 @@ public class Grill : MonoBehaviour
     public GrillSlot[] slots = new GrillSlot[3];
     public IngredientItem[] NextItems = new IngredientItem[3];
 
+    public GameObject[]NextTray  = new GameObject[3];
+
     public GameObject prefabItem = null;
     public bool IsBusy { get; private set; }
 
@@ -25,6 +27,7 @@ public class Grill : MonoBehaviour
     public float placeMoveTime = 0.08f;
     public float explodeTime = 0.10f;
 
+    public int RemaintrayCount = 0;
     // 연쇄를 “원천 차단”하려면: 한 번 Place 처리 시 여기서만 체크하고 끝.
     // (폭발로 비워져도 다른 그릴을 자동 검사하지 않음)
 
@@ -102,6 +105,17 @@ public class Grill : MonoBehaviour
         }
 
      
+    }
+    public void SetRemaintrayCount(int count)
+    {
+        RemaintrayCount = count + 1;
+
+        for (int i = 0; i < 3; ++i)
+        {
+            NextTray[i].SetActive(i <= count);
+        }
+
+
     }
  
 
@@ -311,6 +325,12 @@ public class Grill : MonoBehaviour
                 slots[i].Current = a;
             }
         }
+        RemaintrayCount -= 1;
+
+        for (int i = 0; i < 3; ++i)
+        {
+            NextTray[i].SetActive(i < RemaintrayCount);
+        }
         for (int i = 0; i < 3; i++)
         {
             NextItems[i].transform.eulerAngles = new Vector3(0, 0, -40f);
@@ -320,16 +340,24 @@ public class Grill : MonoBehaviour
 
         }
 
-        var Data = JobMaker.GlobalDataBox.GetData<StageData>();
-        int nextindex = Random.Range(0, 2) == 0 ? 0 : 1;
-
-
-        for (int i = 0; i < 2; i++)
+        if (RemaintrayCount <= 0)
         {
-            NextItems[nextindex].ShakeNextItem(Data.GetNextItemData());
-
-            nextindex++;
+            
         }
+        else
+        {
+            var Data = JobMaker.GlobalDataBox.GetData<StageData>();
+            int nextindex = Random.Range(0, 2) == 0 ? 0 : 1;
+
+
+            for (int i = 0; i < 2; i++)
+            {
+                NextItems[nextindex].ShakeNextItem(Data.GetNextItemData());
+
+                nextindex++;
+            }
+        }
+      
     }
 
     IEnumerator CoMoveTo(Transform item, Transform target, float time)

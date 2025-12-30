@@ -16,7 +16,7 @@ MonoBehaviour:
   X: 4
   Y: 4
   StageTime: 600
-  StageEXP: 40
+  StageEXP: 10
   ItemKind: 10
   LockGame: 0
   LockPos: []
