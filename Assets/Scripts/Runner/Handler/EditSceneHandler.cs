@@ -22,7 +22,7 @@ public class EditSceneHandler : MonoBehaviour
 
     private Vector2 _cell; // 타일 한 칸 크기(월드)
 
-    private StageData Data;
+    
 
     public void Awake()
     {
@@ -49,16 +49,7 @@ public class EditSceneHandler : MonoBehaviour
                 ObjBunners[(y*Y) + x] = grill.GetComponent<Grill>();
             }
         }
-        Data = JobMaker.GlobalDataBox.GetData<StageData>();
-
-        Data.Data = Resources.Load<SaveData>("StageData/Stage_1");
-
-        Data.insertStageItem();
-
-        for (int i = 0; i < ObjBunners.Length; ++i)
-        {
-            ObjBunners[i].InitializeSlot();
-        }
+       
         
     }
 

@@ -1,3 +1,4 @@
+using Assets.Scripts.FrameWork.Job;
 using UnityEngine;
 
 public class InGameHandler : MonoBehaviour
@@ -17,6 +18,8 @@ public class InGameHandler : MonoBehaviour
     public GameObject Bunners;
 
     private BgFitMode mode = BgFitMode.Stretch;
+
+    private StageData Data;
     void Awake()
     {
         I = this;
@@ -28,6 +31,21 @@ public class InGameHandler : MonoBehaviour
 
         Resize();
     }
+    public void Start()
+    {
+        Data = JobMaker.GlobalDataBox.GetData<StageData>();
+
+        Data.Data = Resources.Load<SaveData>("StageData/Stage_1");
+
+        Data.insertStageItem();
+
+        for (int i = 0; i < Bunners.transform.childCount; ++i)
+        {
+            Grill ObjBunner = Bunners.transform.GetChild(i).GetComponent<Grill>();
+
+            ObjBunner.InitializeSlot();
+        }
+    }
     public void UnLockGrill(IngredientType type)
     {
         if (type == IngredientType.None) return;
@@ -36,6 +54,8 @@ public class InGameHandler : MonoBehaviour
         {
             Bunners.transform.GetChild(i).GetComponent<Grill>().UnLockGrill(type);
         }
+
+
     }
     private void Resize()
     {
