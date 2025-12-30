@@ -14,6 +14,8 @@ public class InGameHandler : MonoBehaviour
 
     public SpriteRenderer GridManager;
 
+    public GameObject Bunners;
+
     private BgFitMode mode = BgFitMode.Stretch;
     void Awake()
     {
@@ -26,7 +28,15 @@ public class InGameHandler : MonoBehaviour
 
         Resize();
     }
+    public void UnLockGrill(IngredientType type)
+    {
+        if (type == IngredientType.None) return;
 
+        for (int i = 0; i < Bunners.transform.childCount; ++i)
+        {
+            Bunners.transform.GetChild(i).GetComponent<Grill>().UnLockGrill(type);
+        }
+    }
     private void Resize()
     {
         if (sr == null) sr = GetComponent<SpriteRenderer>();

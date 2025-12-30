@@ -1,3 +1,4 @@
+using Assets.Scripts.FrameWork.Job;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
@@ -5,6 +6,15 @@ using static UnityEditor.Progress;
 
 public class Grill : MonoBehaviour
 {
+    public bool isLock;
+    public GameObject obj_Lock;
+    public SpriteRenderer sr_LockImage;
+    public IngredientType lockType;
+    public bool isDirty;
+    public GameObject obj_Dirty;
+
+    public bool isBlind;
+    public GameObject obj_Object;
     public GrillSlot[] slots = new GrillSlot[3];
     public IngredientItem[] NextItems = new IngredientItem[3];
 
@@ -18,13 +28,82 @@ public class Grill : MonoBehaviour
     // 연쇄를 “원천 차단”하려면: 한 번 Place 처리 시 여기서만 체크하고 끝.
     // (폭발로 비워져도 다른 그릴을 자동 검사하지 않음)
 
-    private void Start()
+    public void InitializeSlot()
     {
-        for (int i = 0; i < NextItems.Length; i++)
+        obj_Lock.SetActive(isLock);
+        obj_Object.SetActive(!isLock);
+        if (isLock)
         {
-            NextItems[i].ShakeNextItem();
+            string path = "Image/Ingame/Item_Preview/" + lockType.ToString() + "_pre";
+
+            sr_LockImage.sprite = Resources.Load<Sprite>(path);
+
+            for (int i = 0; i < slots.Length; i++)
+            {
+                var it = slots[i].Remove();
+                if (it != null) Destroy(it.gameObject);
+            }
         }
+        else
+        {
+            var Data = JobMaker.GlobalDataBox.GetData<StageData>();
+
+            var empty = Random.Range(0, 4);
+
+            switch (empty)
+            {
+                case 0:
+                case 1:
+                case 2:
+                    var item = GameObject.Instantiate(prefabItem, slots[empty].transform);
+
+                    IngredientItem a = item.GetComponent<IngredientItem>();
+
+                    a.SetType(Data.GetNextItemData());
+
+                    slots[empty].Current = a;
+                    break;
+                default:
+                    int index = Random.Range(0,2) == 0 ? 0 : 1;
+
+                    for (int i = 0; i < 2; ++i)
+                    {
+                        var item2 = GameObject.Instantiate(prefabItem, slots[index].transform);
+
+                        IngredientItem a2 = item2.GetComponent<IngredientItem>();
+
+                        a2.SetType(Data.GetNextItemData());
+
+                        slots[index].Current = a2;
+
+                        index += 1;
+                    }
+
+                    break;
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                NextItems[i].transform.eulerAngles = new Vector3(0, 0, -40f);
+                NextItems[i].transform.localPosition = Vector3.zero;
+                NextItems[i].transform.localScale = new Vector3(1f, 1f, 1f);
+                NextItems[i].ShakeNextItem(IngredientType.None);
+
+            }
+
+            int nextindex = Random.Range(0, 2) == 0 ? 0 : 1;
+
+            for (int i = 0; i < 2; i++)
+            {
+                NextItems[nextindex].ShakeNextItem(Data.GetNextItemData());
+
+                nextindex++;
+            }
+
+        }
+
+     
     }
+ 
 
     public void TryPlace(IngredientItem item , GrillSlot slot)
     {
@@ -69,6 +148,7 @@ public class Grill : MonoBehaviour
         {
             if (IsAllSameType(out var sameType))
             {
+                InGameHandler.I.UnLockGrill(sameType);
                 // 폭발 처리
                 yield return CoExplode(sameType);
             }
@@ -77,6 +157,32 @@ public class Grill : MonoBehaviour
 
         item.Lock(false);
         IsBusy = false;
+    }
+
+    public void UnLockGrill(IngredientType type)
+    {
+        if (!isLock) return;
+
+        if (lockType == type)
+        {
+            obj_Lock.SetActive(false);
+            obj_Object.SetActive(true);
+
+            EmptyItem(false);
+        }
+    }
+    public IngredientType CompleteType()
+    {
+        IngredientType type = IngredientType.None;
+
+        if (IsFull())
+        {
+            if (IsAllSameType(out var sameType))
+            {
+                type = sameType;
+            }
+        }
+        return type;
     }
 
     bool IsFull()
@@ -118,7 +224,7 @@ public class Grill : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
 
-        yield return NextItemSet();
+        EmptyItem(false);
 
 
         InGameUIHandler.I.AddExp();
@@ -140,13 +246,40 @@ public class Grill : MonoBehaviour
             return Vector3.zero;
         }
     }
-    public void EmptyItem()
+
+
+    //test
+    int ClockCount = 0;
+    //test
+    public void AddCleanUpCount()
+    {
+        ClockCount += 1;
+        if (ClockCount >= 3)
+        {
+            ClockCount = 0;
+            isDirty = false;
+            obj_Dirty.gameObject.SetActive(false);
+            obj_Object.SetActive(true);
+            StartCoroutine(NextItemSet());
+        }
+    }
+
+    public void EmptyItem(bool _isDirty = false)
     {
         //다음레벨이 있다면! 꼭체크해야함
 
+        obj_Dirty.gameObject.SetActive(_isDirty);
         //없다면
-
-        StartCoroutine(NextItemSet());
+        if (_isDirty)
+        {
+            isDirty = _isDirty;
+            obj_Object.SetActive(false);
+        }
+        else
+        {
+            StartCoroutine(NextItemSet());
+        }
+        
     }
     IEnumerator NextItemSet()
     {
@@ -177,11 +310,25 @@ public class Grill : MonoBehaviour
 
                 slots[i].Current = a;
             }
-            NextItems[i].transform.eulerAngles = new Vector3(0,0,-40f);
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            NextItems[i].transform.eulerAngles = new Vector3(0, 0, -40f);
             NextItems[i].transform.localPosition = Vector3.zero;
-            NextItems[i].transform.localScale = new Vector3(1f,1f,1f);
-            NextItems[i].ShakeNextItem();
+            NextItems[i].transform.localScale = new Vector3(1f, 1f, 1f);
+            NextItems[i].ShakeNextItem(IngredientType.None);
 
+        }
+
+        var Data = JobMaker.GlobalDataBox.GetData<StageData>();
+        int nextindex = Random.Range(0, 2) == 0 ? 0 : 1;
+
+
+        for (int i = 0; i < 2; i++)
+        {
+            NextItems[nextindex].ShakeNextItem(Data.GetNextItemData());
+
+            nextindex++;
         }
     }
 

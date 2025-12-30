@@ -15,6 +15,8 @@ public class GrillGameController : MonoBehaviour
     public float dragStartThreshold = 8f; // 픽셀
     public float snapBackTime = 0.12f;
 
+
+
     IngredientItem _picked;
     Collider2D _pickedCol;
     GrillSlot _prevGrillSlot;
@@ -41,6 +43,7 @@ public class GrillGameController : MonoBehaviour
         if (Input.GetMouseButtonUp(0)) OnUp(Input.mousePosition);
     }
 
+
     void OnDown(Vector2 screen)
     {
         _pressing = true;
@@ -48,6 +51,19 @@ public class GrillGameController : MonoBehaviour
         _pressScreen = screen;
 
         var world = ScreenToWorld(screen);
+
+        var _PrevGrill = Physics2D.Raycast(world, Vector2.zero, 0f, grillMask);
+
+        if (_PrevGrill.collider)
+        {
+            _prevGrill = _PrevGrill.collider.GetComponent<Grill>();
+
+            if (_prevGrill.isDirty)
+            {
+                _prevGrill.AddCleanUpCount();
+                return;
+            }
+        }
 
         // 재료 먼저 선택
         var hit = Physics2D.Raycast(world, Vector2.zero, 0f, ingredientMask);
@@ -60,12 +76,8 @@ public class GrillGameController : MonoBehaviour
 
         var GrillHit = Physics2D.Raycast(world, Vector2.zero, 0f, grillSlotMask);
 
-        var _PrevGrill = Physics2D.Raycast(world, Vector2.zero, 0f, grillMask);
-
         if (GrillHit.collider != null)
             _prevGrillSlot = GrillHit.collider.GetComponent<GrillSlot>();
-
-        _prevGrill = _PrevGrill.collider.GetComponent<Grill>();
 
         _picked = item;
         _pickedCol = hit.collider;
@@ -137,6 +149,7 @@ public class GrillGameController : MonoBehaviour
 
             if (ok)
             {
+               
                 grill.TryPlace(_picked, grillslot);
                 _prevGrillSlot.Current= null;
 
@@ -147,6 +160,8 @@ public class GrillGameController : MonoBehaviour
                        _prevGrill.EmptyItem();
                     }
                 }
+
+               
                 _picked = null;
                 _prevGrill = null;
                 _pickedCol = null;

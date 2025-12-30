@@ -1,3 +1,4 @@
+using Assets.Scripts.FrameWork.Job;
 using UnityEngine;
 using static UnityEngine.UI.Image;
 
@@ -17,9 +18,11 @@ public class EditSceneHandler : MonoBehaviour
     public GameObject prefab_Bunner;
     public Transform tr_Bunners;
 
-    private GameObject[] ObjBunners;
+    private Grill[] ObjBunners;
 
     private Vector2 _cell; // 타일 한 칸 크기(월드)
+
+    private StageData Data;
 
     public void Awake()
     {
@@ -31,7 +34,7 @@ public class EditSceneHandler : MonoBehaviour
 
     public void Start()
     {
-        ObjBunners = new GameObject[X * Y];
+        ObjBunners = new Grill[X * Y];
 
         for (int y = 0; y < Y; y++)
         {
@@ -41,9 +44,22 @@ public class EditSceneHandler : MonoBehaviour
                 float py = (y - (Y - 1) / 2f) * _cell.y;
 
                 Vector2 pos = new Vector2(px, py);
-                Instantiate(prefab_Bunner, pos, Quaternion.identity, tr_Bunners);
+               var grill = Instantiate(prefab_Bunner, pos, Quaternion.identity, tr_Bunners);
+
+                ObjBunners[(y*Y) + x] = grill.GetComponent<Grill>();
             }
         }
+        Data = JobMaker.GlobalDataBox.GetData<StageData>();
+
+        Data.Data = Resources.Load<SaveData>("StageData/Stage_1");
+
+        Data.insertStageItem();
+
+        for (int i = 0; i < ObjBunners.Length; ++i)
+        {
+            ObjBunners[i].InitializeSlot();
+        }
+        
     }
 
     private  Vector2 MeasureTileSize(GameObject prefab)

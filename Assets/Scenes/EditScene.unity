@@ -2004,6 +2004,7 @@ GameObject:
   - component: {fileID: 1348132057}
   - component: {fileID: 1348132056}
   - component: {fileID: 1348132058}
+  - component: {fileID: 1348132059}
   m_Layer: 0
   m_Name: BG
   m_TagString: Untagged
@@ -2099,12 +2100,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EditSceneHandler
   X: 3
-  Y: 1
+  Y: 3
   StageLevel: 1
   StageClearTime: 600
   CompleteEXP: 100
   prefab_Bunner: {fileID: 6377948962253486027, guid: 4eb82fb4e04771049bb996b115f91d97, type: 3}
   tr_Bunners: {fileID: 1182340971}
+--- !u!114 &1348132059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348132054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 780aca94989e79047996b56bbb4235a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InGameHandler
+  GridManager: {fileID: 153075665}
+  Bunners: {fileID: 1182340970}
 --- !u!1 &1392913772
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 949105731258196528}
   - component: {fileID: 1192844750217277650}
   - component: {fileID: 3039656631821983693}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Title_Ribbon_01_Purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7928433750603580248}
   - component: {fileID: -3453235838535505414}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Popup_Notice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 917853986081434822}
   - component: {fileID: 3205215475648981393}
   - component: {fileID: 6055168300982626407}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 3127842872679950828}
   - component: {fileID: 8592890745844325769}
   - component: {fileID: 6713359331442965263}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Dimmed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 4693124897193703744}
   - component: {fileID: 8814796723098309368}
   - component: {fileID: 8606108168893253489}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Button_Ok
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 3855349529807434775}
   - component: {fileID: 7397438485832462667}
   - component: {fileID: 4140458403323036494}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Desc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -549,6 +549,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -593,7 +594,7 @@ GameObject:
   - component: {fileID: 3857947856725141450}
   - component: {fileID: 2137750492834117679}
   - component: {fileID: 6006942958282827229}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: OKText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -674,7 +675,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -685,6 +686,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -729,7 +731,7 @@ GameObject:
   - component: {fileID: 6327574784370853631}
   - component: {fileID: 4785786264030190626}
   - component: {fileID: 7569655653852635478}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -804,7 +806,7 @@ GameObject:
   - component: {fileID: 6482693482123463972}
   - component: {fileID: 5051325192937242589}
   - component: {fileID: 1886317590499883286}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -885,7 +887,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 91.65
+  m_fontSize: 50
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -896,6 +898,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
