@@ -4,8 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Stage",menuName = "XPUP/STAGE")]
 public class SaveData : ScriptableObject
 {
+    [Header("가로")]
     public int X = 4;
-
+    [Header("세로")]
     public int Y = 4;
 
     public int StageLevel = 1;
