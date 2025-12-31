@@ -1,5 +1,6 @@
 using Assets.Scripts.FrameWork.Job;
 using DG.Tweening;
+using System.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -76,24 +77,31 @@ public class LobbyStageContainer : MonoBehaviour
         //    ;
         //클리어하고 나옴 연출 별 팡팡팡! .to 준광 검색용
     }
-
     public void OnClickStageEnter()
     {
-        //팝업 켜서 스타트 만들자   .to 준광 검색용
-        PlayerPrefs.SetInt("CurrentStage",m_StageLevel);
-        var MaxClear = PlayerPrefs.GetInt("MaxClearStage", -1);
-        var obj = Resources.Load("Popup/Popup_Notice") as GameObject;
+        OpenStageStartPopup();
+    }
 
-        var popup = Instantiate(obj, GameObject.Find("UICanvas").transform);
+    public async Task OpenStageStartPopup()
+    {
 
-        if (MaxClear + 1 < m_StageLevel)
-        {
-            popup.GetComponent<PopupNotice>().SetDesc("Clear the previous stage and come!!","O K",null );
-        }
-        else
-        {
-            popup.GetComponent<PopupNotice>().SetDesc("Here We Go!!", "G O", () => JobMaker.TriggerGlobalEvent(EventDefine.SHOW_SCENE_LOADING));
-        }
+        await  PopupManager.Instance.OpenAsync<PopupStageStart>("Popup/Stage/Popup_StageStart");
+
+        ////팝업 켜서 스타트 만들자   .to 준광 검색용
+        //PlayerPrefs.SetInt("CurrentStage",m_StageLevel);
+        //var MaxClear = PlayerPrefs.GetInt("MaxClearStage", -1);
+        //var obj = Resources.Load("Popup/Popup_Notice") as GameObject;
+
+        //var popup = Instantiate(obj, GameObject.Find("UICanvas").transform);
+
+        //if (MaxClear + 1 < m_StageLevel)
+        //{
+        //    popup.GetComponent<PopupNotice>().SetDesc("Clear the previous stage and come!!","O K",null );
+        //}
+        //else
+        //{
+        //    popup.GetComponent<PopupNotice>().SetDesc("Here We Go!!", "G O", () => JobMaker.TriggerGlobalEvent(EventDefine.SHOW_SCENE_LOADING));
+        //}
      
         //스타트후 씬전환  .to 준광 검색용
     }

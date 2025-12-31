@@ -34,7 +34,8 @@ public class InGameUIHandler : MonoBehaviour
 
         slider_exp.value = (float)NowEXP / (float)data.SaveData.StageEXP;
     }
-    public void Start()
+
+    public void Initialize()
     {
         slider_exp = transform.Find("Top/Text_Level/Slider").GetComponent<Slider>();
 
@@ -46,10 +47,6 @@ public class InGameUIHandler : MonoBehaviour
 
         btn_Pause.onClick.AddListener(Show_Popup_Setting);
 
-    
-    }
-    public void Initialize()
-    {
         var data = JobMaker.GlobalDataBox.GetData<StageData>();
 
         NowTime = data.SaveData.StageTime;

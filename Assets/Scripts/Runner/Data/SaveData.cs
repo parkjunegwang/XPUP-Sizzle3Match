@@ -202,7 +202,7 @@ public class GridMaskDataEditor : Editor
     {
    
         EditorGUILayout.BeginVertical("box");
-        GUILayout.TextArea("0. 빈공간 , 1.일반 트레이 2. 시작시 잠금 트레이 3. 머지안하는 트레이 4. 트레일러트레이" );
+        GUILayout.TextArea("0. 빈공간 , 1.일반 트레이 2. 시작시 잠금 트레이 3. 머지안하는 트레이 4.돔 트레이  5. 트레일러트레이" );
 
         EditorGUILayout.Space(12);
         for (int y = data.height - 1; y >= 0; y--) // 위에서 아래로 보이게(원하면 0->height로 바꿔도 됨)
