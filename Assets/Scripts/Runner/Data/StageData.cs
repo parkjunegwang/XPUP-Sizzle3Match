@@ -6,26 +6,22 @@ using UnityEngine;
 
 public class StageData : IJMData
 {
-    public int m_StageLevel = 1;
 
-    public int Stage_Time = 600;
 
     public string GetTimer()
     {
-        TimeSpan t = TimeSpan.FromSeconds(Stage_Time);
+        TimeSpan t = TimeSpan.FromSeconds(SaveData.StageTime);
 
         return t.ToString(@"mm\:ss"); 
     }
 
-    public int CompleteEXP = 150;
-
-    public SaveData Data;
+    public SaveData SaveData;
 
     private List<IngredientType> StageItemList = new List<IngredientType>();
 
     public void insertStageItem()
     {
-        int count = 3 * Data.StageEXP;
+        int count = 3 * SaveData.StageEXP;
 
         int kind = 0;
         int kindCount = 0;
@@ -39,7 +35,7 @@ public class StageData : IJMData
             {
                 kind += 1;
                 kindCount = 0;
-                if (kind == Data.ItemKind)
+                if (kind == SaveData.ItemKind)
                 {
                     kind = 0;
                 }

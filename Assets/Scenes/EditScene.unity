@@ -2189,11 +2189,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a258d3e6cdf455a44a51b3ef3d04a18f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EditSceneHandler
-  X: 3
-  Y: 3
-  StageLevel: 1
-  StageClearTime: 600
-  CompleteEXP: 100
   prefab_Bunner: {fileID: 6377948962253486027, guid: 4eb82fb4e04771049bb996b115f91d97, type: 3}
   tr_Bunners: {fileID: 1182340971}
 --- !u!114 &1348132059

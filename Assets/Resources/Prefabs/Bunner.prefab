@@ -684,7 +684,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1831133462398305812}
   m_Layer: 0
-  m_Name: Object
+  m_Name: NormalTray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -761,6 +761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59e4d20b17ebec4b8000efc2615a815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grill
+  isNoMarge: 0
   isLock: 0
   obj_Lock: {fileID: 7459631978768694163}
   sr_LockImage: {fileID: 7196922721793739930}
@@ -768,7 +769,7 @@ MonoBehaviour:
   isDirty: 0
   obj_Dirty: {fileID: 9099544644637956561}
   isBlind: 0
-  obj_Object: {fileID: 6358424401825624799}
+  obj_TrayObject: {fileID: 6358424401825624799}
   slots:
   - {fileID: 5432445439061019067}
   - {fileID: 2868809771121941426}

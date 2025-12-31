@@ -1,4 +1,7 @@
 using Assets.Scripts.FrameWork.Job;
+using System.Linq;
+using Unity.VectorGraphics.Editor;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InGameHandler : MonoBehaviour
@@ -17,9 +20,17 @@ public class InGameHandler : MonoBehaviour
 
     public GameObject Bunners;
 
+    private GameObject prefabGrill;
+
+    private Grill[] ObjBunners;
+
     private BgFitMode mode = BgFitMode.Stretch;
 
     private StageData Data;
+
+    private Vector2 _cell; // Å¸ÀÏ ÇÑ Ä­ Å©±â(¿ùµå)
+
+
     void Awake()
     {
         I = this;
@@ -28,22 +39,49 @@ public class InGameHandler : MonoBehaviour
 
         sr = GetComponent<SpriteRenderer>();
         // m_Player = GameObject.Find("Player");
-
+     
         Resize();
     }
     public void Start()
     {
         Data = JobMaker.GlobalDataBox.GetData<StageData>();
 
-        Data.Data = Resources.Load<SaveData>("StageData/Stage_1");
+        Data.SaveData = Resources.Load<SaveData>("StageData/Stage_1");
+
+        prefabGrill = Resources.Load<GameObject>("Prefabs/Bunner");
+
+        _cell = MeasureTileSize(prefabGrill); // À§ ÇÔ¼ö »ç¿ë
+
+        
+
+        var GrillPosData = Data.SaveData.GetCheckedPositions();
+
+       for (int y = 0; y < Data.SaveData.height; y++)
+       {
+           for (int x = 0; x < Data.SaveData.width; x++)
+           {
+                if (GrillPosData.Contains(new Vector2Int(x, y)) == false) continue;
+
+               float px = (x - (Data.SaveData.width - 1) / 2f) * (_cell.x + 0.05f);
+               float py = (y - (Data.SaveData.height - 1) / 2f) * _cell.y;
+
+               Vector2 pos = new Vector2(px, py);
+              var grill = Instantiate(prefabGrill, pos, Quaternion.identity, Bunners.transform);
+
+               var itemBunner = grill.GetComponent<Grill>();
+
+               itemBunner.SetType((eTrayType)Data.SaveData.GetType(x, y));
+           }
+       }
+        ObjBunners = new Grill[Bunners.transform.childCount];
 
         Data.insertStageItem();
 
         for (int i = 0; i < Bunners.transform.childCount; ++i)
         {
-            Grill ObjBunner = Bunners.transform.GetChild(i).GetComponent<Grill>();
+            ObjBunners[i] = Bunners.transform.GetChild(i).GetComponent<Grill>();
 
-            ObjBunner.InitializeSlot();
+            ObjBunners[i].InitializeSlot();
         }
 
         //ÃÑ ±×¸© °¹¼ö¸¦ ±¸ÇÑ´Ù..
@@ -55,25 +93,35 @@ public class InGameHandler : MonoBehaviour
         {
             Grill ObjBunner = Bunners.transform.GetChild(i).GetComponent<Grill>();
 
+            int GetAdd = 0;
             if (sprayRemainCount < 0)
             {
-                sprayRemainCount = 0;
+                GetAdd = 0;
             }
-            ObjBunner.SetRemaintrayCount(sprayCount + sprayRemainCount);
+            else
+            {
+                sprayRemainCount -= 1;
+                GetAdd = 1;
+            }
+            ObjBunner.SetRemaintrayCount(sprayCount + GetAdd);
 
             sprayRemainCount -= 1;
             //ÃæÀü ³ª¸ÓÁö ±×¸© °¹¼ö
             //ObjBunner.InitializeSlot();
         }
-        //
+        InGameUIHandler.I.Initialize();
     }
     public void UnLockGrill(IngredientType type)
     {
         if (type == IngredientType.None) return;
 
-        for (int i = 0; i < Bunners.transform.childCount; ++i)
+        for (int i = 0; i < ObjBunners.Length; ++i)
         {
-            Bunners.transform.GetChild(i).GetComponent<Grill>().UnLockGrill(type);
+            if (ObjBunners[i].isLock)
+            {
+                ObjBunners[i].UnLockGrill(type);
+            }
+           // Bunners.transform.GetChild(i).GetComponent<Grill>().UnLockGrill(type);
         }
 
 
@@ -117,5 +165,24 @@ public class InGameHandler : MonoBehaviour
                 GridManager.transform.localScale = new Vector3(sx, sx, 1f);
                 break;
         }
+    }
+
+    private Vector2 MeasureTileSize(GameObject prefab)
+    {
+        var go = Instantiate(prefab);
+        go.SetActive(true);
+
+        var srs = go.GetComponentsInChildren<SpriteRenderer>(true);
+        Bounds b = default;
+        bool has = false;
+
+        foreach (var sr in srs)
+        {
+            if (!has) { b = sr.bounds; has = true; }
+            else b.Encapsulate(sr.bounds);
+        }
+
+        Destroy(go);
+        return has ? (Vector2)b.size : Vector2.one;
     }
 }

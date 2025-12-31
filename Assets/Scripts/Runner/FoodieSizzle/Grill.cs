@@ -4,8 +4,18 @@ using System.Collections;
 using UnityEngine;
 using static UnityEditor.Progress;
 
+public enum eTrayType
+{ 
+    None , //어차피 꺼져있을타입.
+    Normal, // 노말타입
+    Lock, //잠금 스타트
+    NoMarge , //머지 안시킴
+    Trailer, //계속움직이는 트레일러트레이
+}
 public class Grill : MonoBehaviour
 {
+    public bool isNoMarge = false;
+
     public bool isLock;
     public GameObject obj_Lock;
     public SpriteRenderer sr_LockImage;
@@ -14,7 +24,7 @@ public class Grill : MonoBehaviour
     public GameObject obj_Dirty;
 
     public bool isBlind;
-    public GameObject obj_Object;
+    public GameObject obj_TrayObject;
     public GrillSlot[] slots = new GrillSlot[3];
     public IngredientItem[] NextItems = new IngredientItem[3];
 
@@ -30,11 +40,32 @@ public class Grill : MonoBehaviour
     public int RemaintrayCount = 0;
     // 연쇄를 “원천 차단”하려면: 한 번 Place 처리 시 여기서만 체크하고 끝.
     // (폭발로 비워져도 다른 그릴을 자동 검사하지 않음)
+    public void SetType(eTrayType _type) 
+    {
+        var Data = JobMaker.GlobalDataBox.GetData<StageData>();
+        switch (_type)
+        {
+            case eTrayType.Normal:
+                break;
+            case eTrayType.Lock:
+                isLock = true;
+                lockType = (IngredientType)Random.Range(0, Data.SaveData.ItemKind);
+                break;
+            case eTrayType.NoMarge:
+                isNoMarge = true;
+                break;
+            case eTrayType.Trailer:
+                break;
+     
+        }
 
+    }
     public void InitializeSlot()
     {
+        var Data = JobMaker.GlobalDataBox.GetData<StageData>();
+
         obj_Lock.SetActive(isLock);
-        obj_Object.SetActive(!isLock);
+        obj_TrayObject.SetActive(!isLock);
         if (isLock)
         {
             string path = "Image/Ingame/Item_Preview/" + lockType.ToString() + "_pre";
@@ -49,7 +80,7 @@ public class Grill : MonoBehaviour
         }
         else
         {
-            var Data = JobMaker.GlobalDataBox.GetData<StageData>();
+           
 
             var empty = Random.Range(0, 4);
 
@@ -58,65 +89,92 @@ public class Grill : MonoBehaviour
                 case 0:
                 case 1:
                 case 2:
-                    var item = GameObject.Instantiate(prefabItem, slots[empty].transform);
+                    var nextType = Data.GetNextItemData();
+                    if (nextType != IngredientType.None)
+                    {
+                        var item = GameObject.Instantiate(prefabItem, slots[empty].transform);
 
-                    IngredientItem a = item.GetComponent<IngredientItem>();
+                        IngredientItem a = item.GetComponent<IngredientItem>();
 
-                    a.SetType(Data.GetNextItemData());
+                        a.SetType(nextType);
 
-                    slots[empty].Current = a;
+                        slots[empty].Current = a;
+                    }
+                  
                     break;
                 default:
                     int index = Random.Range(0,2) == 0 ? 0 : 1;
 
                     for (int i = 0; i < 2; ++i)
                     {
-                        var item2 = GameObject.Instantiate(prefabItem, slots[index].transform);
+                        var type = Data.GetNextItemData();
 
-                        IngredientItem a2 = item2.GetComponent<IngredientItem>();
+                        if (type != IngredientType.None)
+                        {
+                            var item2 = GameObject.Instantiate(prefabItem, slots[index].transform);
 
-                        a2.SetType(Data.GetNextItemData());
+                            IngredientItem a2 = item2.GetComponent<IngredientItem>();
 
-                        slots[index].Current = a2;
+                            a2.SetType(type);
 
-                        index += 1;
+                            slots[index].Current = a2;
+
+                            index += 1;
+                        }
+                      
                     }
 
                     break;
             }
-            for (int i = 0; i < 3; i++)
-            {
-                NextItems[i].transform.eulerAngles = new Vector3(0, 0, -40f);
-                NextItems[i].transform.localPosition = Vector3.zero;
-                NextItems[i].transform.localScale = new Vector3(1f, 1f, 1f);
-                NextItems[i].ShakeNextItem(IngredientType.None);
+          
 
-            }
-
-            int nextindex = Random.Range(0, 2) == 0 ? 0 : 1;
-
-            for (int i = 0; i < 2; i++)
-            {
-                NextItems[nextindex].ShakeNextItem(Data.GetNextItemData());
-
-                nextindex++;
-            }
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            NextItems[i].transform.eulerAngles = new Vector3(0, 0, -40f);
+            NextItems[i].transform.localPosition = Vector3.zero;
+            NextItems[i].transform.localScale = new Vector3(1f, 1f, 1f);
+            NextItems[i].ShakeNextItem(IngredientType.None);
 
         }
 
-     
+        int nextindex = Random.Range(0, 2) == 0 ? 0 : 1;
+
+        for (int i = 0; i < 2; i++)
+        {
+            NextItems[nextindex].ShakeNextItem(Data.GetNextItemData());
+
+            nextindex++;
+        }
+
     }
     public void SetRemaintrayCount(int count)
     {
-        RemaintrayCount = count + 1;
+        int emptyCount = 0;
+        for (int i = 0; i < NextItems.Length; ++i)
+        {
+            if (NextItems[i].type == IngredientType.None)
+            {
+                emptyCount++;
+            }
+        }
+        int defaultCount = 1;
+        if (emptyCount == NextItems.Length)
+        {
+            defaultCount = 0;
+        }
+
+        RemaintrayCount = count + defaultCount;
 
         for (int i = 0; i < 3; ++i)
         {
-            NextTray[i].SetActive(i <= count);
+            NextTray[i].SetActive(i < RemaintrayCount);
         }
 
 
     }
+
+    
  
 
     public void TryPlace(IngredientItem item , GrillSlot slot)
@@ -158,7 +216,7 @@ public class Grill : MonoBehaviour
         targetSlot.Place(item);
 
         // 3) 3개 다 찼으면 판정
-        if (IsFull())
+        if (IsFull() && !isNoMarge)
         {
             if (IsAllSameType(out var sameType))
             {
@@ -179,8 +237,9 @@ public class Grill : MonoBehaviour
 
         if (lockType == type)
         {
+            isLock = false;
             obj_Lock.SetActive(false);
-            obj_Object.SetActive(true);
+            obj_TrayObject.SetActive(true);
 
             EmptyItem(false);
         }
@@ -273,7 +332,7 @@ public class Grill : MonoBehaviour
             ClockCount = 0;
             isDirty = false;
             obj_Dirty.gameObject.SetActive(false);
-            obj_Object.SetActive(true);
+            obj_TrayObject.SetActive(true);
             StartCoroutine(NextItemSet());
         }
     }
@@ -287,7 +346,7 @@ public class Grill : MonoBehaviour
         if (_isDirty)
         {
             isDirty = _isDirty;
-            obj_Object.SetActive(false);
+            obj_TrayObject.SetActive(false);
         }
         else
         {

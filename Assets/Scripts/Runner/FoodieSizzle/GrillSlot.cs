@@ -9,12 +9,12 @@ public class GrillSlot : MonoBehaviour
     {
         if (anchor == null) anchor = transform;
 
-        var a = transform.Find("Item");
-        if (a != null)
-        {
-            Current = a.GetComponent<IngredientItem>();
-            Current.Shake(false);
-        }
+        //var a = transform.Find("Item");
+        //if (a != null)
+        //{
+        //    Current = a.GetComponent<IngredientItem>();
+        //    Current.Shake();
+        //}
         
     }
 

@@ -30,9 +30,9 @@ public class InGameUIHandler : MonoBehaviour
 
         NowEXP += a;
 
-        text_EXP.text = NowEXP + " / "+ data.CompleteEXP;
+        text_EXP.text = NowEXP + " / "+ data.SaveData.StageEXP;
 
-        slider_exp.value = (float)NowEXP / (float)data.CompleteEXP;
+        slider_exp.value = (float)NowEXP / (float)data.SaveData.StageEXP;
     }
     public void Start()
     {
@@ -46,15 +46,19 @@ public class InGameUIHandler : MonoBehaviour
 
         btn_Pause.onClick.AddListener(Show_Popup_Setting);
 
+    
+    }
+    public void Initialize()
+    {
         var data = JobMaker.GlobalDataBox.GetData<StageData>();
 
-        NowTime = data.Stage_Time;
+        NowTime = data.SaveData.StageTime;
 
         NowEXP = 0;
         slider_exp.value = 0;
-        text_EXP.text = "0 / "+data.CompleteEXP;
+        text_EXP.text = "0 / " + data.SaveData.StageEXP;
 
-        text_Level.text = "Level " + data.m_StageLevel.ToString();
+        text_Level.text = "Level " + data.SaveData.StageLevel.ToString();
 
         text_Timer.text = data.GetTimer();
     }

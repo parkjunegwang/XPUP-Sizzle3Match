@@ -57,23 +57,6 @@ public class IngredientItem : MonoBehaviour
 
         sr.sprite = Resources.Load<Sprite>(path);
     }
-    public void Shake(bool isNone)
-    {
-        if (isNone)
-        {
-            type = (IngredientType)Random.Range(0, 7);
-        }
-        else
-        {
-            type = (IngredientType)Random.Range(0, 6);
-        }
-
-        string path = "Image/Ingame/Item/" + type.ToString();
-
-        sr = GetComponent<SpriteRenderer>();
-
-        sr.sprite = Resources.Load<Sprite>(path);
-    }
 
     public void ShakeNextItem(IngredientType _type, bool isBlind = false)
     {
