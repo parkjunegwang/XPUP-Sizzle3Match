@@ -108,6 +108,37 @@ public class PlayerCloudService
         });
     }
 
+    public async Task TryClearStageKstAsync(int ClearStage)
+    {
+        await _db.RunTransactionAsync(async tx =>
+        {
+            var snap = await tx.GetSnapshotAsync(UserDoc);
+            PlayerCloudData data;
+
+            if (!snap.Exists)
+            {
+                data = new PlayerCloudData
+                {
+                    lastMissionAtUtc = Timestamp.FromDateTime(
+                        DateTime.SpecifyKind(new DateTime(2000, 1, 1), DateTimeKind.Utc)),
+                    currency = 0
+                };
+                tx.Set(UserDoc, data);
+            }
+            else
+            {
+                data = snap.ConvertTo<PlayerCloudData>();
+            }
+
+            tx.Update(UserDoc, new Dictionary<string, object>
+        {
+            { "CurrentStage", ClearStage },
+
+        });
+
+        });
+    }
+
     public DateTime GetNextKstMidnightUtc()
     {
         DateTime utcNow = DateTime.UtcNow;

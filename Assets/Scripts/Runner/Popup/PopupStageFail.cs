@@ -1,21 +1,21 @@
 using Assets.Scripts.FrameWork.Job;
-using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.UI;
-public class PopupStageClear : Popup
+
+public class PopupStageFail : Popup
 {
-        
     Button Button_Ok;
     Button Button_Ads_Ok;
     private void Initialize()
     {
-        
+
         Button_Ok = transform.Find("Button01_Claim").GetComponent<Button>();
         Button_Ads_Ok = transform.Find("Button01_AdClaim").GetComponent<Button>();
 
-        Button_Ok.onClick.AddListener(OnStageNextStage);
+        Button_Ok.onClick.AddListener(OnGotoLobby);
         Button_Ads_Ok.onClick.AddListener(OnAdsPlay);
 
-       // Dimed.onClick.AddListener(OnClose);
+        // Dimed.onClick.AddListener(OnClose);
 
         gameObject.SetActive(true);
     }
@@ -24,9 +24,6 @@ public class PopupStageClear : Popup
     {
         gameObject.SetActive(false);
 
-       
-
-        
 
         Initialize();
 
@@ -34,34 +31,19 @@ public class PopupStageClear : Popup
 
     protected override void OnClose()
     {
-        PopupManager.Instance.Close(this);
+        //PopupManager.Instance.Close(this);
         //gameObject.SetActive(false);
     }
 
-    async void OnStageNextStage()
+    void OnGotoLobby()
     {
+
+        BlindsTransition.Instance.ChangeScene(() => { JobMaker.TriggerGlobalEvent(EventDefine.SHOW_SCENE_LOADING); });
 
         Close();
-
-        var data = JobMaker.GlobalDataBox.GetData<StageData>();
-
-        await DataManager.I.ClearStage(data.SaveData.StageLevel);
-
-        InGameHandler.I.NextStage();
-
-        BlindsTransition.Instance.ChangeScene(NextStage);
-
-   
-    }
-
-    public void NextStage()
-    {
-
-        InGameHandler.I.Start();
-
     }
     void OnAdsPlay()
-    { 
-    
+    {
+
     }
 }

@@ -118,6 +118,8 @@ public class BlindsTransition : MonoBehaviour
     {
         if (busy) return;
 
+        action = null;
+
         action = _action;
 
         StartCoroutine(CoChange());

@@ -30,17 +30,27 @@ public class InGameHandler : MonoBehaviour
 
     private Vector2 _cell; // 타일 한 칸 크기(월드)
 
+    public bool isPuaseGame = false;
+
+    InGameFSM inGamefsm;
 
     void Awake()
     {
         I = this;
 
+        inGamefsm = new InGameFSM(new());
         //  m_fsmLobby = new LobbyFSM(new());
 
         sr = GetComponent<SpriteRenderer>();
         // m_Player = GameObject.Find("Player");
      
         Resize();
+    }
+
+    private void OnDestroy()
+    {
+        inGamefsm?.DestroyFSM();
+        inGamefsm = null;
     }
     public void NextStage()
     {
@@ -55,9 +65,19 @@ public class InGameHandler : MonoBehaviour
     }
     public void Start()
     {
+        inGamefsm.StartFSM();
+
         Data = JobMaker.GlobalDataBox.GetData<StageData>();
 
-        Data.SaveData = Resources.Load<SaveData>("StageData/Stage_1");
+        int nowStage = (DataManager.I.prevData.CurrentStage + 1);
+
+        if (DataManager.I.GetMaxStage() < nowStage)
+        {
+            nowStage = DataManager.I.GetMaxStage();
+        }
+
+
+        Data.SaveData = Resources.Load<SaveData>("StageData/Stage_" + nowStage);
 
         prefabGrill = Resources.Load<GameObject>("Prefabs/Bunner");
 

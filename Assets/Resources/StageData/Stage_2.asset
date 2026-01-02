@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43ddccb58edd6f459377a298d44bfaf, type: 3}
   m_Name: Stage_2
   m_EditorClassIdentifier: Assembly-CSharp::SaveData
-  StageLevel: 1
+  StageLevel: 2
   width: 3
-  height: 4
-  types: 030000000300000003000000000000000100000000000000010000000200000001000000000000000200000000000000
+  height: 1
+  types: 010000000100000001000000
   trailerGame: 0
   trailCells: 0100000002000000
   trailTrayCount: 0
-  StageTime: 10
-  StageEXP: 20
-  ItemKind: 10
+  StageTime: 310
+  StageEXP: 5
+  ItemKind: 3
   LockGame: 0
   LockPos: []
   BlindGame: 0

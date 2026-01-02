@@ -33,6 +33,13 @@ public class InGameUIHandler : MonoBehaviour
         text_EXP.text = NowEXP + " / "+ data.SaveData.StageEXP;
 
         slider_exp.value = (float)NowEXP / (float)data.SaveData.StageEXP;
+
+        if (NowEXP >= data.SaveData.StageEXP)
+        {
+            OpenClearPopup();
+            isPause = true;
+        }
+            
     }
 
     public void Initialize()
@@ -88,15 +95,27 @@ public class InGameUIHandler : MonoBehaviour
             if (NowTime <= 0)
             {
                 isPause = true;
-                OpenClearPopup();
+                OpenFailPopup();
             }
         }
 
     }
-
+    public void OnPause()
+    {
+        isPause = true;
+    }
+    public void OnStart()
+    {
+        isPause = false;
+    }
+    private async void OpenFailPopup()
+    {
+        await PopupManager.Instance.OpenAsync<PopupStageFail>("Popup/Stage/Popup_StageFail");
+        
+    }
     private async void OpenClearPopup()
-    { 
-        await PopupManager.Instance.OpenAsync<PopupStageClear>("Popup/Stage/Popup_StageClear"); 
+    {
+        await PopupManager.Instance.OpenAsync<PopupStageClear>("Popup/Stage/Popup_StageClear");
     }
     
 }

@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SaveData
   StageLevel: 1
   width: 3
-  height: 4
-  types: 030000000300000003000000000000000100000000000000010000000200000001000000000000000200000000000000
+  height: 1
+  types: 010000000100000001000000
   trailerGame: 0
   trailCells: 0100000002000000
   trailTrayCount: 0
-  StageTime: 10
-  StageEXP: 20
-  ItemKind: 10
+  StageTime: 300
+  StageEXP: 3
+  ItemKind: 2
   LockGame: 0
   LockPos: []
   BlindGame: 0

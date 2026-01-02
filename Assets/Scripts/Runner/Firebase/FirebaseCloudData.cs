@@ -10,4 +10,9 @@ public class PlayerCloudData
     [FirestoreProperty] public int version { get; set; } = 1;          // 확장용
 
     [FirestoreProperty] public int count { get; set; } = 0;          // 카운트에따라 보상지급 7초과시 0으로다시돌아가는
+
+
+    [FirestoreProperty] public int CurrentStage { get; set; } = 0;          // 현재 스테이지
+
+    [FirestoreProperty] public int StageChallengeCount { get; set; } = 0;          // 하트
 }

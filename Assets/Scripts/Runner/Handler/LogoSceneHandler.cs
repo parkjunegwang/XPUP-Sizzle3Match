@@ -1,5 +1,7 @@
 using DG.Tweening;
 using TMPro;
+using TreeEditor;
+using Unity.Android.Gradle.Manifest;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +12,9 @@ public class LogoSceneHandler : MonoBehaviour
     private Slider m_LoadingBar;
 
     private TextMeshProUGUI m_textLoading;
+
+
+
     private Image m_LoadingCircle;
     private void Awake()
     {
@@ -18,9 +23,10 @@ public class LogoSceneHandler : MonoBehaviour
         m_LoadingCircle = GameObject.Find("Loading_Circle").GetComponent<Image>();
     }
 
-    private void Start()
+    private async void Start()
     {
         m_LoadingCircle.transform.DORotate(new Vector3(0, 0, 90f), 4f);
+
 
         DOTween.Sequence().AppendInterval(1)
                         .Append(DOTween.To(() => m_LoadingBar.value, x => m_LoadingBar.value = x, 1f, 1f).SetEase(Ease.Linear))

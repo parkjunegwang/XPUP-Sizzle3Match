@@ -11,11 +11,10 @@ public class PopupDailyBonus : Popup
 
     bool isGetItem = false;
 
-    private PlayerCloudService _service;
 
     private DailyBonusItem[] dailyBonusItems;
 
-    private PlayerCloudData prevData;
+
 
     private DailyBonusItem todayItem;
     private void Initialize()
@@ -41,6 +40,8 @@ public class PopupDailyBonus : Popup
             dailyBonusItems[i] = ItemParent.transform.GetChild(i).GetComponent<DailyBonusItem>();
             dailyBonusItems[i].Initailize();
         }
+        var prevData = DataManager.I.prevData;
+
         if (prevData.lastMissionAtUtc.ToDateTime().Day == DateTime.Now.Day)
         {
             prevData.count--;
@@ -79,26 +80,10 @@ public class PopupDailyBonus : Popup
 
         gameObject.SetActive(true);
     }
-    protected override async void OnOpen(object args)
+    protected override void OnOpen(object args)
     {
         gameObject.SetActive(false);
-        // Firebase 준비 대기
-        if (FirebaseBootstrap.Instance == null)
-        {
-            Debug.LogError("FirebaseBootstrap is missing in scene.");
-            return;
-        }
-
-        if (!FirebaseBootstrap.Instance.IsReady)
-            await FirebaseBootstrap.Instance.InitAsync();
-
-
-        _service = new PlayerCloudService(FirebaseBootstrap.Instance.Auth);
-
-        prevData = await _service.GetOrCreateAsync();
-        Debug.Log($"Loaded: currency={prevData.currency}, lastMissionAtUtc={prevData.lastMissionAtUtc.ToDateTime():u} , count= {prevData.count}");
-
-        
+      
 
         Initialize();
 
@@ -108,26 +93,9 @@ public class PopupDailyBonus : Popup
         PopupManager.Instance.Close(this);
         //gameObject.SetActive(false);
     }
-    public async void OnClickClaimDaily()
+    public void OnClickClaimDaily()
     {
-        if (_service == null) return;
-
-        int reward = 1;
-
-        var result = await _service.TryClaimDailyKstAsync(reward);
-
-        if (result.ok)
-        {
-            Debug.Log($"✅ Daily claimed! currencyAfter={result.currencyAfter}");
-
-
-        }
-        else
-        {
-            Debug.Log($"⏳ Cooldown. remain={FormatRemain(result.remain)}");
-        }
-
-
+        DataManager.I.OnClickClaimDaily();
     }
 
     public void OnClickGetItem()
@@ -139,10 +107,6 @@ public class PopupDailyBonus : Popup
         todayItem.GetItemAni();
     }
 
-    private string FormatRemain(TimeSpan t)
-    {
-        if (t < TimeSpan.Zero) t = TimeSpan.Zero;
-        return $"{(int)t.TotalHours:00}:{t.Minutes:00}:{t.Seconds:00}";
-    }
+ 
   
 }

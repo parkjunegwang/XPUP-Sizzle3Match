@@ -21,6 +21,8 @@ public class StageData : IJMData
 
     public void insertStageItem()
     {
+        StageItemList.Clear();
+        itemcount = -1;
         int count = 3 * SaveData.StageEXP;
 
         int kind = 0;
