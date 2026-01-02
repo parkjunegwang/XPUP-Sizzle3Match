@@ -41,7 +41,11 @@ public class PopupStageClear : Popup
 
     void OnStageNextStage()
     {
+
         InGameHandler.I.NextStage();
+
+        BlindsTransition.Instance.ChangeScene(InGameHandler.I.Start);
+
 
         Close();
     }
