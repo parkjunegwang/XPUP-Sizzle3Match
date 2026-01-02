@@ -42,6 +42,17 @@ public class InGameHandler : MonoBehaviour
      
         Resize();
     }
+    public void NextStage()
+    {
+        for (int i = 0; i < ObjBunners.Length; ++i)
+        {
+            Destroy(ObjBunners[i].gameObject);
+        }
+        ObjBunners = null;
+
+       // Start();
+
+    }
     public void Start()
     {
         Data = JobMaker.GlobalDataBox.GetData<StageData>();

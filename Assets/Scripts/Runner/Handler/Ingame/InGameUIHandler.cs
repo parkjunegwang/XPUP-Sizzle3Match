@@ -58,6 +58,8 @@ public class InGameUIHandler : MonoBehaviour
         text_Level.text = "Level " + data.SaveData.StageLevel.ToString();
 
         text_Timer.text = data.GetTimer();
+
+        isPause = false;
     }
 
     public async void Show_Popup_Setting()
@@ -68,9 +70,11 @@ public class InGameUIHandler : MonoBehaviour
     private float _pointTime = 1.0f; //1초마다 실행
     private float _nextTime = 0.0f; //다음번 실행할 시간
 
-    // Update is called once per frame
+    private bool isPause = false;
     void FixedUpdate()
     {
+        if (isPause) return;
+
         if (Time.time > _nextTime)
         {
             _nextTime = Time.time + _pointTime; //다음번 실행할 시간
@@ -80,8 +84,19 @@ public class InGameUIHandler : MonoBehaviour
             TimeSpan t = TimeSpan.FromSeconds(NowTime);
 
             text_Timer.text = t.ToString(@"mm\:ss");
+
+            if (NowTime <= 0)
+            {
+                isPause = true;
+                OpenClearPopup();
+            }
         }
 
+    }
+
+    private async void OpenClearPopup()
+    { 
+        await PopupManager.Instance.OpenAsync<PopupStageClear>("Popup/Stage/Popup_StageClear"); 
     }
     
 }

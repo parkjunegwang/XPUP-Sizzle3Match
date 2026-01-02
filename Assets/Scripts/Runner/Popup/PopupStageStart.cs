@@ -1,8 +1,5 @@
 using Assets.Scripts.FrameWork.Job;
-using System;
-using TreeEditor;
-using Unity.Android.Gradle.Manifest;
-using UnityEngine;
+
 using UnityEngine.UI;
 
 public class PopupStageStart : Popup
