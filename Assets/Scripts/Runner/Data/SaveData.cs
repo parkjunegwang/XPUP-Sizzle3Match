@@ -1,6 +1,5 @@
 using System;
 using UnityEditor;
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Stage", menuName = "XPUP/STAGE")]
@@ -109,7 +108,7 @@ public class SaveData : ScriptableObject
 }
 
 
-
+#if UNITY_EDITOR
 
 [CustomEditor(typeof(SaveData))]
 public class GridMaskDataEditor : Editor
@@ -227,3 +226,4 @@ public class GridMaskDataEditor : Editor
 
     }
 }
+#endif

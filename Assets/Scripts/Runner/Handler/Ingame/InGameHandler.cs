@@ -1,6 +1,5 @@
 using Assets.Scripts.FrameWork.Job;
 using System.Linq;
-using Unity.VectorGraphics.Editor;
 using Unity.VisualScripting;
 using UnityEngine;
 

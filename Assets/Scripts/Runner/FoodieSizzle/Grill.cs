@@ -2,7 +2,6 @@ using Assets.Scripts.FrameWork.Job;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public enum eTrayType
 { 

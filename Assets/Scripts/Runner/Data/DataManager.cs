@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using TreeEditor;
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 
 public class DataManager : MonoBehaviour
@@ -72,13 +70,10 @@ public class DataManager : MonoBehaviour
         return $"{(int)t.TotalHours:00}:{t.Minutes:00}:{t.Seconds:00}";
     }
 
-    private string folderPath = "Assets/Resources/StageData"; // 파일 개수를 셀 폴더 경로 (Assets 기준)
-
     public int GetMaxStage()
     {
+        var data = Resources.LoadAll<SaveData>("StageData");
 
-        string[] files = Directory.GetFiles(folderPath, "*.asset", SearchOption.AllDirectories);
-
-        return files.Length;
+        return data.Length;
     }
 }

@@ -63,8 +63,9 @@ public class PopupSetting : Popup
     }
     public void OnClickReturntoLobby()
     {
-        BlindsTransition.Instance.ChangeScene(() => { JobMaker.TriggerGlobalEvent(EventDefine.SHOW_SCENE_LOADING); });
+
         Close();
+        BlindsTransition.Instance.ChangeScene(() => { JobMaker.TriggerGlobalEvent(EventDefine.SHOW_SCENE_LOADING); });
     }
     public void SetSfxVolume(float value)
     {
