@@ -2168,7 +2168,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: fab06e0be9375cc4d823efa71629885c, type: 3}
-  m_Color: {r: 0.8078432, g: 0.70980394, b: 0.5686275, a: 1}
+  m_Color: {r: 0.9339623, g: 0.8346584, b: 0.69166076, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3056,7 +3056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8078432, g: 0.70980394, b: 0.5686275, a: 1}
+  m_Color: {r: 0.9333334, g: 0.8352942, b: 0.6862745, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
