@@ -127,10 +127,14 @@ public class BlindsTransition : MonoBehaviour
     {
         busy = true;
         yield return Close();
-        
-        yield return new WaitForSeconds(2f);
-        
+
+        yield return new WaitForSeconds(1f);
+
         action?.Invoke();
+
+        yield return new WaitForSeconds(1f);
+        
+        
         
         yield return Open();
         busy = false;

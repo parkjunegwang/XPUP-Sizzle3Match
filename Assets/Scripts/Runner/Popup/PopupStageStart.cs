@@ -41,7 +41,8 @@ public class PopupStageStart : Popup
 
     void OnStagePlay()
     {
-        JobMaker.TriggerGlobalEvent(EventDefine.SHOW_SCENE_LOADING);
+        BlindsTransition.Instance.ChangeScene(()=> { JobMaker.TriggerGlobalEvent(EventDefine.SHOW_SCENE_LOADING); });
+                
 
         Close();
     }
